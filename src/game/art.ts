@@ -83,7 +83,6 @@ export const BACKGROUNDS = [
   "oven",
   "observatory-hall",
   "planet-door-open",
-  "epilogue-trial-2",
 ];
 
 export const CHARACTERS = ["detective", "kid", "baker", "phantom"];
