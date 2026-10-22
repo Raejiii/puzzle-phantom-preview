@@ -1,0 +1,1166 @@
+{
+  "title": "The Puzzle Phantom of Willowbrook",
+  "instructions": "The Puzzle Phantom has stolen the Golden Owl Trophy! Help Detective Riley and Sam follow the Phantom's notes across Willowbrook. Tap to read the story, then solve each puzzle to find the next clue.",
+  "duration": 900,
+  "background": "assets/start-background.webp",
+  "howToVideoUrl": "assets/video/how-to.mp4",
+  "audio": {
+    "instructions": null,
+    "background": {
+      "src": "assets/audio/silence.mp3"
+    }
+  },
+  "customAssets": [],
+  "showAnswers": false,
+  "showRestartButton": true,
+  "passingScorePercent": 0,
+  "theme": {
+    "title": {
+      "color": "#ffffff",
+      "strokeColor": "#2b3275"
+    }
+  },
+  "levels": [
+    {
+      "id": "lvl-1",
+      "name": "The Phantom's Note",
+      "level": 1,
+      "instruction": "DRAG AND SWAP THE LETTERS TO FIND OUT THE WORDS",
+      "background": "office",
+      "music": "music-trouble-makers",
+      "intro": [
+        {
+          "background": "house",
+          "style": "place",
+          "text": "Detective Riley's House\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "gate",
+          "text": "Front door of Detective Riley's house",
+          "audio": "dia-1"
+        },
+        {
+          "background": "kid-door",
+          "text": "A young kid opens the door and rushes inside",
+          "audio": "dia-2"
+        },
+        {
+          "background": "detective-desk",
+          "text": "Riley was arranging his case files",
+          "audio": "dia-3"
+        },
+        {
+          "background": "detective-desk-2",
+          "text": "The sudden sound of the door grabbed his attention",
+          "audio": "dia-4"
+        },
+        {
+          "background": "living-room",
+          "speaker": "detective",
+          "text": "Sam ? Why are you rushing ? What's wrong ",
+          "audio": "dia-5"
+        },
+        {
+          "background": "living-room",
+          "speaker": "kid",
+          "text": "Detective Riley! Something terrible happened!",
+          "audio": "dia-6"
+        },
+        {
+          "background": "living-room",
+          "speaker": "detective",
+          "text": "Sam! Slow down. Tell me the issue.",
+          "audio": "dia-7"
+        },
+        {
+          "background": "living-room",
+          "speaker": "kid",
+          "text": "Someone named the Puzzle Phantom broke into Willowbrook Elementary and took the Golden Owl Trophy.",
+          "audio": "dia-8"
+        },
+        {
+          "background": "living-room",
+          "speaker": "detective",
+          "text": "The Golden Owl? That trophy is 40 years old! It's part of our town history.",
+          "audio": "dia-9"
+        },
+        {
+          "background": "living-room",
+          "speaker": "kid",
+          "text": "Principal Martinez is really upset. And… the Phantom left this note for you!",
+          "audio": "dia-10"
+        },
+        {
+          "background": "living-room",
+          "speaker": "detective",
+          "text": "Let's go to my office room and read it.",
+          "audio": "dia-11"
+        },
+        {
+          "background": "office",
+          "style": "note",
+          "text": "Dear Detective Riley,\nI am the Puzzle Phantom. I took the Golden Owl Trophy because this town has forgotten how to truly ALERN.\nIf you can solve my puzzles before DIMTHNIG, you'll find me - and the trophy. If you fail, I will leave Willowbrook forever and take the Golden Owl with me. Your first clue is at the YRARLIB.\nProve that curiosity and intelligence still exist in this town.\n— The Puzzle Phantom\nP.S - Do you like science, Detective? You'll need it very soon.",
+          "audio": "dia-12",
+          "noteImage": "note-1",
+          "noteArea": {
+            "x": 464,
+            "y": 236,
+            "width": 602,
+            "height": 633,
+            "rotation": -0.1047
+          }
+        },
+        {
+          "background": "office",
+          "speaker": "kid",
+          "text": "What does it mean? Are these secret words?",
+          "audio": "dia-13"
+        },
+        {
+          "background": "office",
+          "speaker": "detective",
+          "text": "It's scrambled, Sam. This is our first puzzle. Let's figure it out.",
+          "audio": "dia-14"
+        }
+      ],
+      "puzzle": {
+        "kind": "unscramble",
+        "word": "LEARN",
+        "letters": [
+          "A",
+          "L",
+          "E",
+          "R",
+          "N"
+        ],
+        "hints": [
+          "This is something you do every day at school",
+          "The word starts with L",
+          "L _ _ R N"
+        ]
+      },
+      "outro": [],
+      "howToVideo": "assets/video/how-to-1.mp4",
+      "clock": "8:00",
+      "clue": "LEARN"
+    },
+    {
+      "id": "lvl-2",
+      "name": "Before Midnight",
+      "level": 2,
+      "instruction": "DRAG AND SWAP THE LETTERS TO FIND OUT THE WORDS",
+      "background": "office",
+      "music": "music-trouble-makers",
+      "intro": [],
+      "puzzle": {
+        "kind": "unscramble",
+        "word": "MIDNIGHT",
+        "letters": [
+          "D",
+          "I",
+          "M",
+          "T",
+          "H",
+          "N",
+          "I",
+          "G"
+        ],
+        "hints": [
+          "This word is a time of day, when the clock strikes 12 at night",
+          "The word starts with M and ends with T",
+          "M I _ _ _ G H T"
+        ]
+      },
+      "outro": [],
+      "howToVideo": "assets/video/how-to-1.mp4",
+      "clock": "8:40",
+      "clue": "MIDNIGHT"
+    },
+    {
+      "id": "lvl-3",
+      "name": "The First Clue",
+      "level": 3,
+      "instruction": "DRAG AND SWAP THE LETTERS TO FIND OUT THE WORDS",
+      "background": "office",
+      "music": "music-trouble-makers",
+      "intro": [],
+      "puzzle": {
+        "kind": "unscramble",
+        "word": "LIBRARY",
+        "letters": [
+          "Y",
+          "R",
+          "A",
+          "R",
+          "L",
+          "I",
+          "B"
+        ],
+        "hints": [
+          "This is a place where you borrow books",
+          "The word starts with L and ends with Y",
+          "L I B _ _ _ Y"
+        ]
+      },
+      "outro": [
+        {
+          "background": "office",
+          "speaker": "kid",
+          "text": "Library! The first clue is at the Willowbrook Public Library!",
+          "audio": "dia-15"
+        },
+        {
+          "background": "office",
+          "speaker": "detective",
+          "text": "Yes, Sam but we gotta work fast and solve all his puzzles before midnight.",
+          "audio": "dia-16"
+        },
+        {
+          "background": "office",
+          "speaker": "kid",
+          "text": "But why the library?",
+          "audio": "dia-17"
+        },
+        {
+          "background": "office",
+          "speaker": "detective",
+          "text": "He mentioned science, maybe something is at the science section.",
+          "audio": "dia-18"
+        },
+        {
+          "background": "office",
+          "speaker": "kid",
+          "text": "Detective…who do you think the Puzzle Phantom is?",
+          "audio": "dia-19"
+        },
+        {
+          "background": "office",
+          "speaker": "detective",
+          "text": "I'm not sure yet. But someone who loves learning can't be completely bad. Still, stealing was wrong. We have to stop him. Let's go!",
+          "audio": "dia-20"
+        }
+      ],
+      "howToVideo": "assets/video/how-to-1.mp4",
+      "clock": "9:15",
+      "clue": "LIBRARY"
+    },
+    {
+      "id": "lvl-4",
+      "name": "The Science of Matter",
+      "level": 4,
+      "instruction": "SELECT THE CORRECT ANSWERS TO OPEN THE BOX",
+      "background": "clue-box",
+      "music": "music-matter",
+      "intro": [
+        {
+          "background": "library",
+          "style": "place",
+          "text": "Willowbrook Public Library\n\t\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "We're finally here, at the science section of the library",
+          "audio": "dia-21"
+        },
+        {
+          "background": "library-room",
+          "speaker": "kid",
+          "text": "What's that ?",
+          "audio": "dia-22"
+        },
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "Looks like maybe that's our next puzzle.",
+          "audio": "dia-23"
+        },
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "Let's Check it out.",
+          "audio": "dia-24"
+        },
+        {
+          "background": "box-off",
+          "text": "They see a strange box with buttons",
+          "audio": "dia-25"
+        },
+        {
+          "background": "clue-box",
+          "text": "The box turned on when they got close and the screen turned green",
+          "audio": "dia-26"
+        },
+        {
+          "background": "clue-box",
+          "style": "note",
+          "text": "Hello Detective,\nI hid your next clue in this box. You'll need to understand the science of MATTER to reveal it.\nGood luck. The clock is ticking.\n— The Puzzle Phantom",
+          "audio": "dia-27",
+          "noteImage": "clue-box",
+          "noteArea": {
+            "x": 368,
+            "y": 332,
+            "width": 328,
+            "height": 176
+          }
+        }
+      ],
+      "puzzle": {
+        "kind": "quiz",
+        "questions": [
+          {
+            "text": "Ice is SOLID. When we add HEAT to ice, what does it become?",
+            "options": [
+              "SOLID",
+              "LIQUID",
+              "GAS"
+            ],
+            "correct": 1,
+            "audio": "dia-28",
+            "correctAudio": "dia-29",
+            "wrongAudio": "dia-35",
+            "hint": "Think about what happens to ice cream on a hot day"
+          },
+          {
+            "text": "Water is LIQUID. If we keep heating water until it boils, what does it become?",
+            "options": [
+              "SOLID",
+              "LIQUID",
+              "GAS"
+            ],
+            "correct": 2,
+            "audio": "dia-31",
+            "correctAudio": "dia-30",
+            "wrongAudio": "dia-36",
+            "hint": "What do you see coming out of a boiling kettle?"
+          },
+          {
+            "text": "Steam is GAS. If we COOL it down, what does it become?",
+            "options": [
+              "SOLID",
+              "LIQUID",
+              "GAS"
+            ],
+            "correct": 1,
+            "audio": "dia-32",
+            "correctAudio": "dia-29",
+            "wrongAudio": "dia-37",
+            "hint": "Steam is water that got hot. What happens when it cools back down?"
+          },
+          {
+            "text": "FINAL QUESTION : Which of these can help ice melt?",
+            "options": [
+              "The Sun",
+              "A freezer",
+              "A cold fan"
+            ],
+            "correct": 0,
+            "audio": "dia-34",
+            "correctAudio": "dia-33",
+            "wrongAudio": "dia-38",
+            "hint": "Which one of these three is actually warm or hot?"
+          }
+        ]
+      },
+      "outro": [
+        {
+          "background": "clue-box",
+          "text": "The box turns off",
+          "audio": "dia-39"
+        },
+        {
+          "background": "box-unlocked",
+          "text": "The locked portion of the box is now unlocked",
+          "audio": "dia-40",
+          "sound": "open-box"
+        },
+        {
+          "background": "library-room",
+          "style": "note",
+          "text": "Impressive, Detective. You understand science.\nBut do you understand GEOGRAPHY?\nMy next puzzle is hidden at the Town Hall's Geography Exhibit.\nCoordinates and curiosity will guide you.\nTime's running out detective.\n- The Puzzle Phantom",
+          "audio": "dia-41",
+          "noteImage": "note-2",
+          "noteArea": {
+            "x": 464,
+            "y": 236,
+            "width": 602,
+            "height": 633,
+            "rotation": -0.1047
+          }
+        }
+      ],
+      "howToVideo": "assets/video/how-to-2.mp4",
+      "clock": "9:45",
+      "clue": "GEOGRAPHY"
+    },
+    {
+      "id": "lvl-5",
+      "name": "The Compass Rose",
+      "level": 5,
+      "instruction": "LOCATE THE AREA IN THE MAP USING THE DIRECTIONS GIVEN",
+      "background": "geo-room",
+      "music": "music-jazz",
+      "intro": [
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "The Town Hall Geography Exhibit. That's downtown.",
+          "audio": "dia-42"
+        },
+        {
+          "background": "library-room",
+          "speaker": "kid",
+          "text": "Detective, why is the Phantom doing this? If they love learning so much, why steal the Golden Owl?",
+          "audio": "dia-43"
+        },
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "That's a very good question, Sam. Maybe they're trying to prove a point. But that doesn't make it right.",
+          "audio": "dia-44"
+        },
+        {
+          "background": "library-room",
+          "speaker": "kid",
+          "text": "Golden Owl was won by the school's Science Club in 1985, maybe the phantom was a part of it ?",
+          "audio": "dia-45"
+        },
+        {
+          "background": "library-room",
+          "speaker": "detective",
+          "text": "Maybe. Come on, let's get to Town Hall. We're running out of time.",
+          "audio": "dia-46"
+        },
+        {
+          "background": "geo-observatory",
+          "style": "place",
+          "text": "Willowbrook Geo-Observatory\n\t\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "detective",
+          "text": "Finally we're at the Geography Observatory",
+          "audio": "dia-47"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "kid",
+          "text": "What can we possibly find here detective",
+          "audio": "dia-48"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "detective",
+          "text": "Look Sam there's a note attached to the map on the wall",
+          "audio": "dia-49"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "kid",
+          "text": "Maybe that's our next clue detective",
+          "audio": "dia-50"
+        },
+        {
+          "background": "geo-room",
+          "style": "note",
+          "text": "Welcome to my favorite room in Town Hall, Detective.\nWhen I was young, every child could read a map. We knew our COMPASS DIRECTIONS without GPS. We understood our town, our world.\nCan you do the same?\nUse the compass rose. Count carefully. And find my next clue using the directions written on the board.\n- The Puzzle Phantom",
+          "audio": "dia-51",
+          "noteImage": "note-3",
+          "noteArea": {
+            "x": 464,
+            "y": 236,
+            "width": 602,
+            "height": 633,
+            "rotation": -0.1047
+          }
+        },
+        {
+          "background": "geo-room",
+          "speaker": "kid",
+          "text": "A compass rose? What's that?",
+          "audio": "dia-52"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "detective",
+          "text": "See that symbol on the map? It shows North, South, East, and West. It helps us navigate, that's called a compass rose",
+          "audio": "dia-53"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "kid",
+          "text": "Oh! Like in video games!",
+          "audio": "dia-54"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "detective",
+          "text": "Exactly. Now let's solve this puzzle",
+          "audio": "dia-55"
+        }
+      ],
+      "puzzle": {
+        "kind": "map",
+        "title": "MAP OF WILLOWBROOK",
+        "columns": 7,
+        "rows": 6,
+        "places": [
+          {
+            "letter": "C",
+            "name": "CLOCK TOWER",
+            "column": 2,
+            "row": 0
+          },
+          {
+            "letter": "B",
+            "name": "BAKER'S SHOP",
+            "column": 5,
+            "row": 1
+          },
+          {
+            "letter": "S",
+            "name": "SCHOOL",
+            "column": 1,
+            "row": 2
+          },
+          {
+            "letter": "G",
+            "name": "GEO-OBSERVATORY",
+            "column": 3,
+            "row": 2
+          },
+          {
+            "letter": "L",
+            "name": "LIBRARY",
+            "column": 1,
+            "row": 3
+          },
+          {
+            "letter": "O",
+            "name": "SPACE OBSERVATORY",
+            "column": 6,
+            "row": 3
+          },
+          {
+            "letter": "D",
+            "name": "DETECTIVE'S HOUSE",
+            "column": 3,
+            "row": 4
+          },
+          {
+            "letter": "P",
+            "name": "POLICE STATION",
+            "column": 1,
+            "row": 5
+          }
+        ],
+        "legendOrder": [
+          "L",
+          "G",
+          "S",
+          "P",
+          "D",
+          "O",
+          "B",
+          "C"
+        ],
+        "start": "G",
+        "steps": [
+          {
+            "direction": "N",
+            "blocks": 2
+          },
+          {
+            "direction": "E",
+            "blocks": 3
+          },
+          {
+            "direction": "S",
+            "blocks": 1
+          },
+          {
+            "direction": "W",
+            "blocks": 1
+          }
+        ],
+        "directions": "START at the Geo-Obseravatory \n1. Go 2 blocks NORTH\n2. Turn EAST and go 3 blocks\n3. Turn SOUTH and go 1 block\n4. Turn WEST and go 1 block\nWhere are you now?",
+        "hints": [
+          "You can only move up, down, left or right – no diagonals!",
+          "Try to avoid the labeled letters, they might block your path",
+          "G is your start and B is your destination – think like you're navigating a real map!"
+        ],
+        "rightSounds": [
+          "RIGHT"
+        ],
+        "wrongSounds": [
+          "wrong1",
+          "wrong2",
+          "wrong3"
+        ]
+      },
+      "outro": [
+        {
+          "background": "geo-room",
+          "speaker": "kid",
+          "text": "The Bakery ! The next clue is at the bakery",
+          "audio": "dia-56"
+        },
+        {
+          "background": "geo-room",
+          "speaker": "detective",
+          "text": "YES ! Sam, let's move fast",
+          "audio": "dia-57"
+        }
+      ],
+      "howToVideo": "assets/video/how-to-3.mp4",
+      "clock": "10:30",
+      "clue": "BAKERY"
+    },
+    {
+      "id": "lvl-6",
+      "name": "The Learning Cake",
+      "level": 6,
+      "instruction": "SELECT THE CORRECT ANSWERS ON THE CARD",
+      "background": "bakery-room",
+      "music": "music-funk-lead",
+      "intro": [
+        {
+          "background": "bakery",
+          "style": "place",
+          "text": "Willowbrook Bakery\n\t\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Detective Riley and young Sam! What brings you here so late ?",
+          "audio": "dia-58"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "We're investigating the Golden Owl theft. We have reason to believe the Puzzle Phantom was here yesterday",
+          "audio": "dia-59"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Ah, yes. There was someone...unusual. They ordered a very specific custom cake with exact measurements.",
+          "audio": "dia-60"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "kid",
+          "text": "What did they look like?",
+          "audio": "dia-61"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "They wore a long coat and a hat, kept their face hidden. But I remember their voice, gentle, sad even",
+          "audio": "dia-62"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "Did they say anything ?",
+          "audio": "dia-63"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "They left me this recipe card and said, 'If a detective comes asking, have them solve this. If they can't, they don't deserve to find me.",
+          "audio": "dia-64"
+        },
+        {
+          "background": "recipe-card",
+          "text": "The baker gives the recipe card to detective Riley",
+          "audio": "dia-65"
+        },
+        {
+          "background": "bakery-room",
+          "style": "note",
+          "text": "PHANTOM'S SPECIAL LEARNING CAKE\nThis recipe tests whether you truly understand\nFRACTIONS and MATHEMATICS.\nAnswer all questions correctly, and I'll reveal\nwhere I'm going next.\nRemember: Precision in baking is like precision\nin thinking. Every measurement matters.\n- The Puzzle Phantom",
+          "audio": "dia-66",
+          "noteImage": "note-4",
+          "noteArea": {
+            "x": 656,
+            "y": 164,
+            "width": 316,
+            "height": 540
+          }
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Well let's not waste time I'll tell you the questions and you'll answer.",
+          "audio": "dia-67"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "YES ! let's do it, are you ready Sam ?",
+          "audio": "dia-68"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "kid",
+          "text": "Yes detective let's begin",
+          "audio": "dia-69"
+        }
+      ],
+      "puzzle": {
+        "kind": "quiz",
+        "questions": [
+          {
+            "text": "The recipe needs 3/4 cup of flour. The baker only has a 1/4 cup measuring scoop. How many times must the baker fill the scoop?",
+            "options": [
+              "(a) 2 times",
+              "(b) 3 times",
+              "(c) 4 times",
+              "(d) 1 time"
+            ],
+            "correct": 1,
+            "audio": "dia-70",
+            "correctAudio": "RIGHTb",
+            "wrongAudio": "WRONGb",
+            "hint": "1/4 × ? = 3/4"
+          },
+          {
+            "text": "One batch makes 12 cupcakes. The Phantom ordered enough for their entire science class. If they need 36 cupcakes, how many batches must the baker make?",
+            "options": [
+              "(a) 2 batches",
+              "(b) 3 batches",
+              "(c) 4 batches",
+              "(d) 12 batches"
+            ],
+            "correct": 1,
+            "audio": "dia-71",
+            "correctAudio": "RIGHTb2",
+            "wrongAudio": "WRONGb2",
+            "hint": "12 × ? = 36, what is ?"
+          },
+          {
+            "text": "The Phantom ordered 2 dozen cookies. How many cookies is that?",
+            "options": [
+              "(a) 12 cookies",
+              "(b) 20 cookies",
+              "(c) 24 cookies",
+              "(d) 14 cookies"
+            ],
+            "correct": 2,
+            "audio": "dia-72",
+            "correctAudio": "RIGHTb",
+            "wrongAudio": "WRONGb",
+            "hint": "1 dozen = 12, so 2 dozen = ?"
+          },
+          {
+            "text": "The baker has 5 eggs. The recipe needs 8 eggs. How many more eggs does the baker need to buy?",
+            "options": [
+              "(a) 2 eggs",
+              "(b) 3 eggs",
+              "(c) 5 eggs",
+              "(d) 13 eggs"
+            ],
+            "correct": 1,
+            "audio": "dia-73",
+            "correctAudio": "RIGHTb2",
+            "wrongAudio": "WRONGb",
+            "hint": "8 – 5 = ?"
+          },
+          {
+            "text": "If the baker starts baking at 2:30 PM and the cake takes 45 minutes to bake, what time will it be done?",
+            "options": [
+              "(a) 3:00 PM",
+              "(b) 3:15 PM",
+              "(c) 3:30 PM",
+              "(d) 2:45 PM"
+            ],
+            "correct": 1,
+            "audio": "dia-74",
+            "correctAudio": "RIGHTb3",
+            "wrongAudio": "WRONGb",
+            "hint": "30 minutes after 2:30 is 3:00, then add 15 more minutes"
+          }
+        ]
+      },
+      "outro": [
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Great job detective there's another note that strange person gave, but it has nothing written on it",
+          "audio": "dia-75"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "Did he say anything about that note ?",
+          "audio": "dia-76"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Yes, he said something strange-like, 'When the detective solves the mathematics, tell them to warm the note with heat'",
+          "audio": "dia-77"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "kid",
+          "text": "Warm the card? that's strange",
+          "audio": "dia-78"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "No, not really, thermochromic ink or what we know as invisible ink becomes visible when interacted with heat",
+          "audio": "dia-79"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Let's heat up the note in the warming tray",
+          "audio": "dia-80"
+        },
+        {
+          "background": "oven",
+          "text": "The baker heats up the note in the oven",
+          "audio": "dia-81"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "Look something is written on the note now",
+          "audio": "dia-82"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "kid",
+          "text": "What is it ?",
+          "audio": "dia-84"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "Let's read it",
+          "audio": "dia-83"
+        },
+        {
+          "background": "bakery-room",
+          "style": "note",
+          "text": "Excellent work, Detective. You understand both mathematics and its real-world use. Yes, I was here yesterday. I ordered a cake for a celebration that never happened — the 40th reunion of our old Science Club. When I returned to the school, no one even remembered us. The Golden Owl sat forgotten in a dusty case, ignored by students who pass it every day. That is why I took it.\nIf you want to find me, look to the stars. I'll be at the Observatory, where we once dreamed of exploring the cosmos. Come, if you dare, and prove that learning still matters.\n— The Puzzle Phantom",
+          "audio": "dia-85",
+          "noteImage": "note-5",
+          "noteArea": {
+            "x": 456,
+            "y": 220,
+            "width": 575,
+            "height": 661,
+            "rotation": -0.1187
+          }
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "baker",
+          "text": "By the looks of it the phantom can be an old professor. Well you lads must not be late, move fast.",
+          "audio": "dia-86"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "kid",
+          "text": "Detective, which professor can it be ?",
+          "audio": "dia-87"
+        },
+        {
+          "background": "bakery-room",
+          "speaker": "detective",
+          "text": "I still don't have any idea let's find out Sam",
+          "audio": "dia-89"
+        }
+      ],
+      "howToVideo": "assets/video/how-to-4.mp4",
+      "clock": "11:00",
+      "clue": "OBSERVATORY"
+    },
+    {
+      "id": "lvl-7",
+      "name": "The Planet Door",
+      "level": 7,
+      "instruction": "PLACE THE PLANETS IN THE PERFECT ORDER TO OPEN THE DOOR",
+      "background": "planet-door",
+      "music": "music-funk",
+      "intro": [
+        {
+          "background": "planetarium",
+          "style": "place",
+          "text": "Willowbrook Space Observatory\n\t\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "detective",
+          "text": "Finally we're at the Space Observatory",
+          "audio": "dia-90"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "kid",
+          "text": "But detective how do we enter the main room ?",
+          "audio": "dia-91"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "detective",
+          "text": "Look Sam there's a note attached near the door",
+          "audio": "dia-92"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "kid",
+          "text": "Let's read it",
+          "audio": "dia-93"
+        },
+        {
+          "background": "observatory-hall",
+          "style": "note",
+          "text": "Welcome to my sanctuary, Detective.\nThis Observatory was built in 1982. My Science Club raised the money through bake sales and car washes.\nIn 1986, we all gathered here to watch Halley's Comet.\nTwenty bright students, all believing science could change the world.\nProve to me you understand our cosmic neighborhood.\nArrange the planets correctly, and the door will open.\nThen meet me at the Clock Tower at midnight.\n- The Puzzle Phantom",
+          "audio": "dia-94",
+          "noteImage": "note-6",
+          "noteArea": {
+            "x": 484,
+            "y": 224,
+            "width": 480,
+            "height": 644
+          }
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "detective",
+          "text": "I know that this observatory was built by few students one of them even taught me in the willowbrook school, but who could this phantom be ?",
+          "audio": "dia-95"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "kid",
+          "text": "Detective, the phantom sounds like a nice person but they seem sad and angry with the state of our education",
+          "audio": "dia-96"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "detective",
+          "text": "Then we gotta make them believe Sam, let's solve this puzzle",
+          "audio": "dia-97"
+        },
+        {
+          "background": "observatory-hall",
+          "speaker": "kid",
+          "text": "Yes detective let's do it",
+          "audio": "dia-98"
+        }
+      ],
+      "puzzle": {
+        "kind": "order",
+        "items": [
+          "planet-mercury",
+          "planet-venus",
+          "planet-earth",
+          "planet-mars",
+          "planet-jupiter",
+          "planet-saturn",
+          "planet-uranus",
+          "planet-neptune"
+        ],
+        "labels": [
+          "Mercury",
+          "Venus",
+          "Earth",
+          "Mars",
+          "Jupiter",
+          "Saturn",
+          "Uranus",
+          "Neptune"
+        ],
+        "hints": [
+          "The order goes from closest to the Sun to furthest away",
+          "The first planet is Mercury and the last planet is Neptune",
+          "My Very Eager Mother Just Served Us Nachos – first letter of each word is a planet!"
+        ],
+        "rightSounds": [
+          "RIGHT2",
+          "RIGHT3",
+          "RIGHT4"
+        ],
+        "wrongSounds": [
+          "wrong1",
+          "wrong2",
+          "wrong3"
+        ]
+      },
+      "outro": [
+        {
+          "background": "planet-door",
+          "text": "The detective and young Sam arranged the planets in order on the door",
+          "audio": "dia-99"
+        },
+        {
+          "background": "planet-door-open",
+          "text": "The door opens to dark a room",
+          "audio": "dia-100"
+        },
+        {
+          "background": "space-room",
+          "speaker": "kid",
+          "text": "WOW A TELESCOPE !",
+          "audio": "dia-101"
+        },
+        {
+          "background": "space-room",
+          "speaker": "detective",
+          "text": "Beautiful isn't it, Sam ?",
+          "audio": "dia-102"
+        },
+        {
+          "background": "space-room",
+          "speaker": "kid",
+          "text": "Sure is, but detective the phantom isn't here",
+          "audio": "dia-103"
+        },
+        {
+          "background": "space-room",
+          "speaker": "detective",
+          "text": "Well there's another note attached on the wall, let's read it",
+          "audio": "dia-104"
+        },
+        {
+          "background": "space-room",
+          "style": "note",
+          "text": "You made it. And you solved every puzzle. I'm impressed. Truly.\nIf you want to talk, meet me at the Clock Tower.\nThe place where time runs out. I'll be waiting at the top\n— The Puzzle Phantom",
+          "audio": "dia-105",
+          "noteImage": "note-7",
+          "noteArea": {
+            "x": 526,
+            "y": 196,
+            "width": 452,
+            "height": 631,
+            "rotation": -0.1257
+          }
+        },
+        {
+          "background": "space-room",
+          "speaker": "detective",
+          "text": "Let's not waste any more time Sam",
+          "audio": "dia-106"
+        },
+        {
+          "background": "space-room",
+          "speaker": "kid",
+          "text": "Yes detective, to the clock tower then",
+          "audio": "dia-107"
+        },
+        {
+          "background": "space-room",
+          "speaker": "detective",
+          "text": "Yes, to the clock tower",
+          "audio": "dia-108"
+        },
+        {
+          "background": "clock-tower",
+          "style": "place",
+          "text": "Willowbrook Clock Tower\n\t\nWillowbrook Town",
+          "audio": "typing"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "detective",
+          "text": "PROFESSOR MARCUS WEEB !? YOU ARE THE PHANTOM !?",
+          "audio": "dia-109"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "phantom",
+          "text": "So my favourite student, Riley, you found me. But I'm not giving you back the trophy the people of this town don't deserve it",
+          "audio": "dia-110"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "kid",
+          "text": "But professor stealing the trophy won't do any good to the cause you're aiming for",
+          "audio": "dia-111"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "phantom",
+          "text": "I already know that child but someone must do something",
+          "audio": "dia-112"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "detective",
+          "text": "For what reasons professor ?",
+          "audio": "dia-113"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "phantom",
+          "text": "I thought maybe doing this will proove a point",
+          "audio": "dia-114"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "detective",
+          "text": "Well professor it worked, you know all of your puzzles are solved with the collaboration of Sam, I only guided him",
+          "audio": "dia-115"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "kid",
+          "text": "Yes professor you're puzzles are awesome and we do understand your reasoning",
+          "audio": "dia-116"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "phantom",
+          "text": "You...enjoyed them? Oh I feel like a blind man now, I visited school few weeks ago and saw the state of our students it made me very sad and angry, so I stole the trophy",
+          "audio": "dia-117"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "detective",
+          "text": "Stealing the trophy was wrong, Professor. But what you've done throughout the years for this town was never forgotten",
+          "audio": "dia-118"
+        },
+        {
+          "background": "tower-room",
+          "speaker": "phantom",
+          "text": "I'm sorry. I let disappointment turn to anger. The trophy belongs to the future, not the past",
+          "audio": "dia-119"
+        },
+        {
+          "background": "epilogue-trial",
+          "text": "Professor Weeb was sent to trial",
+          "audio": "dia-120"
+        },
+        {
+          "background": "epilogue-trial-2",
+          "text": "Fortunately the judge understood his reasons and charged him with 70 weeks of public service to Willowbrook School",
+          "audio": "dia-121"
+        },
+        {
+          "background": "epilogue-club",
+          "text": "Professer Weeb opened a puzzles club, and Sam attended the club everyday to solve puzzles",
+          "audio": "dia-122"
+        },
+        {
+          "background": "epilogue-riley",
+          "text": "And detective Riley ? He continued on with his life - new cases, new lessons and new puzzles",
+          "audio": "dia-123"
+        }
+      ],
+      "howToVideo": "assets/video/how-to-5.mp4",
+      "clock": "11:30",
+      "clue": "CLOCK TOWER"
+    }
+  ]
+}
