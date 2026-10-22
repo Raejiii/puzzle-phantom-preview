@@ -8,8 +8,6 @@ export type Layout = {
   height: number;
   /** Narration and dialogue panel along the bottom. */
   caption: Rect;
-  /** Characters stand on this line, this tall, at these x positions for one to three people. */
-  cast: { bottom: number; height: number; slots: number[][] };
   /** The Phantom's notes: parchment centre and height. */
   note: { x: number; y: number; height: number };
   /** Location titles. */
@@ -23,7 +21,6 @@ export const LANDSCAPE: Layout = {
   width: 1440,
   height: 1024,
   caption: { x: 140, y: 790, width: 1160, height: 200 },
-  cast: { bottom: 820, height: 600, slots: [[720], [380, 1060], [300, 720, 1140]] },
   note: { x: 720, y: 560, height: 800 },
   place: { x: 720, y: 540, size: 76 },
   board: { x: 120, y: 250, width: 1200, height: 740 },
@@ -34,7 +31,6 @@ export const PORTRAIT: Layout = {
   width: 750,
   height: 1334,
   caption: { x: 25, y: 1020, width: 700, height: 290 },
-  cast: { bottom: 1050, height: 560, slots: [[375], [200, 550], [150, 375, 600]] },
   note: { x: 375, y: 690, height: 960 },
   place: { x: 375, y: 640, size: 58 },
   board: { x: 25, y: 300, width: 700, height: 1010 },
@@ -91,8 +87,6 @@ export const BACKGROUNDS = [
 ];
 
 export const CHARACTERS = ["detective", "kid", "baker", "phantom"];
-/** Each character's blink, as the original loops it: eyes open, half shut, shut, half shut. */
-export const BLINK_FRAMES = (key: string) => [key, `${key}-2`, `${key}-3`, `${key}-2`, key];
 
 export const NOTES = [1, 2, 3, 4, 5, 6, 7].map((n) => `note-${n}`);
 
@@ -106,6 +100,9 @@ export const RUNTIME_IMAGES = [
   ...CHARACTERS.flatMap((key) => [key, `${key}-2`, `${key}-3`]),
   ...NOTES,
   ...PLANETS,
+  "sky",
+  "clouds",
+  "counter",
   "compass",
   "planet-door-closeup",
   "planet-box",

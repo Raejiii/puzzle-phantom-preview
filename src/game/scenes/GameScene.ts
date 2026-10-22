@@ -18,7 +18,8 @@ import { OrderPuzzle } from "../puzzles/OrderPuzzle";
 import type { PuzzleHooks, PuzzleView } from "../puzzles/puzzle";
 import { QuizPuzzle } from "../puzzles/QuizPuzzle";
 import { UnscramblePuzzle } from "../puzzles/UnscramblePuzzle";
-import { StoryView } from "../StoryView";
+import { CLOUDS, SKY_TINT, STAGING, VIEW, placeOnStage, stageFrame, type StageFrame } from "../stage";
+import { CAST_DEPTH, StoryView } from "../StoryView";
 import type { PhantomLevel, PhantomRuntime } from "../types";
 import { STORY_FONT, UI_FONT, drawPanel, fitText, makeButton, type Button } from "../ui";
 
@@ -51,8 +52,18 @@ export class GameScene extends Phaser.Scene {
   private autoAdvance = false;
 
   private background!: Phaser.GameObjects.Image;
-  private backgroundNext!: Phaser.GameObjects.Image;
   private backgroundKey = "";
+  /** The original's black backdrop, behind everything. */
+  private backdrop!: Phaser.GameObjects.Rectangle;
+  /** Outdoors, the sky and the drifting clouds behind the picture's transparent sky. */
+  private sky!: Phaser.GameObjects.Image;
+  private clouds!: Phaser.GameObjects.TileSprite;
+  /** How far the clouds have drifted, in the original's pixels. */
+  private cloudDrift = 0;
+  /** The bakery counter, in front of the baker. */
+  private counter!: Phaser.GameObjects.Image;
+  /** Where the original's view lies on screen, while the background is a scene it laid out. */
+  private frame: StageFrame | null = null;
   private dim!: Phaser.GameObjects.Rectangle;
   /** Dark fade behind the shell's white title and timer, so they read on bright rooms too. */
   private headerShade!: Phaser.GameObjects.Graphics;
@@ -119,11 +130,20 @@ export class GameScene extends Phaser.Scene {
     this.input.dragDistanceThreshold = 12 * getPixelRatio();
 
     this.layout = this.pickLayout();
+    this.backdrop = this.add.rectangle(0, 0, 10, 10, 0x000000).setDepth(-13);
+    this.sky = this.add.image(0, 0, "sky").setDepth(-12).setRotation(Math.PI).setTint(SKY_TINT).setVisible(false);
+    const cloudTexture = this.textures.get("clouds").getSourceImage();
+    this.clouds = this.add.tileSprite(0, 0, cloudTexture.width, cloudTexture.height, "clouds").setDepth(-11).setVisible(false);
     this.background = this.add.image(0, 0, this.levelData.background).setDepth(-10);
-    this.backgroundNext = this.add.image(0, 0, this.levelData.background).setDepth(-9).setAlpha(0);
+    this.counter = this.add.image(0, 0, "counter").setDepth(CAST_DEPTH + 0.05).setVisible(false);
     this.dim = this.add.rectangle(0, 0, 10, 10, NAVY_DARK, 0.5).setDepth(-5).setAlpha(0);
     this.headerShade = this.add.graphics().setDepth(29);
-    this.story = new StoryView(this, this.audio, (key) => this.setBackground(key));
+    this.story = new StoryView(
+      this,
+      this.audio,
+      (key) => this.setBackground(key),
+      () => this.stageFrame(),
+    );
 
     this.instruction = this.add
       .text(0, 0, this.levelData.instruction, {
@@ -379,36 +399,78 @@ export class GameScene extends Phaser.Scene {
 
   // ---------- background ----------
 
-  /** Crossfades to another background image. */
+  /** Cuts to another background, as the original cuts from scene to scene. */
   private setBackground(key: string) {
     if (key === this.backgroundKey || !this.textures.exists(key)) return;
-    const first = this.backgroundKey === "";
     this.backgroundKey = key;
-    if (first) {
-      this.background.setTexture(key);
-      this.fitBackground(this.background);
-      return;
-    }
-    this.tweens.killTweensOf(this.backgroundNext);
-    this.backgroundNext.setTexture(key).setAlpha(0);
-    this.fitBackground(this.backgroundNext);
-    this.tweens.add({
-      targets: this.backgroundNext,
-      alpha: 1,
-      duration: FADE_MS,
-      onComplete: () => {
-        this.background.setTexture(key);
-        this.fitBackground(this.background);
-        this.backgroundNext.setAlpha(0);
-      },
-    });
+    this.background.setTexture(key);
+    this.cloudDrift = 0;
+    this.fitBackground();
   }
 
-  private fitBackground(image: Phaser.GameObjects.Image) {
+  /**
+   * Fills the screen with the background. Scenes the original laid out are framed as it framed them,
+   * its 640x360 view filling the screen; on a phone held upright a room with people in it shows the
+   * view's whole width instead, on black as in the original, so nobody is cut off the sides.
+   */
+  private fitBackground() {
+    const image = this.background;
+    const staging = STAGING[this.backgroundKey];
     const { width, height } = this.scale;
     const zoom = this.cameras.main.zoom;
-    const cover = Math.max(width / image.width, height / image.height) / zoom;
-    image.setPosition(this.layout.width / 2, this.layout.height / 2).setScale(cover);
+    const centre = { x: this.layout.width / 2, y: this.layout.height / 2 };
+    this.backdrop.setPosition(centre.x, centre.y).setSize(width / zoom + 2, height / zoom + 2);
+    this.frame = null;
+    if (!staging) {
+      image.setScale(Math.max(width / image.width, height / image.height) / zoom).setPosition(centre.x, centre.y);
+    } else if (this.layout === PORTRAIT && staging.cast) {
+      const view = this.visibleRect();
+      this.frame = stageFrame({ x: centre.x, y: (view.y + this.layout.caption.y) / 2 }, view.width / VIEW.width);
+    } else {
+      this.frame = stageFrame(centre, Math.max(width / VIEW.width, height / VIEW.height) / zoom);
+    }
+    const frame = this.frame;
+    if (staging && frame) placeOnStage(image, staging.picture, frame);
+
+    this.sky.setVisible(!!staging?.sky);
+    this.clouds.setVisible(!!staging?.sky);
+    if (staging?.sky && frame) {
+      this.sky.setPosition(centre.x, centre.y).setScale(Math.max(width / this.sky.width, height / this.sky.height) / zoom);
+      // One row of clouds, as wide as the screen, repeating every 672 of the original's pixels
+      const texture = this.clouds.texture.getSourceImage();
+      const scale = (CLOUDS.scale * CLOUDS.width * frame.k) / texture.width;
+      const left = centre.x - width / zoom / 2;
+      this.clouds
+        .setScale(scale)
+        .setSize(Math.ceil(width / zoom / scale) + 2, texture.height)
+        .setPosition(left + this.clouds.width * scale / 2, frame.y(CLOUDS.y));
+      this.driftClouds(0);
+    }
+
+    const counter = staging?.counter;
+    this.counter.setVisible(!!counter && !!frame);
+    if (counter && frame) placeOnStage(this.counter, counter, frame);
+  }
+
+  /** Where the original's view lies on screen, for scenes it laid out. */
+  private stageFrame(): StageFrame | null {
+    return this.frame;
+  }
+
+  /** The clouds drift right at 5 of the original's pixels a second. */
+  private driftClouds(deltaMs: number) {
+    const frame = this.frame;
+    if (!this.clouds.visible || !frame) return;
+    this.cloudDrift += (CLOUDS.speed * deltaMs) / 1000;
+    const perTexturePixel = (CLOUDS.scale * CLOUDS.width) / this.clouds.texture.getSourceImage().width;
+    // Where a cloud picture starts, in the original's pixels: at 288 - 336, plus however far it has drifted
+    const tileLeft = CLOUDS.x - (CLOUDS.scale * CLOUDS.width) / 2 + this.cloudDrift;
+    const screenLeft = CLOUDS.x + (this.clouds.x - this.clouds.displayWidth / 2 - frame.x(CLOUDS.x)) / frame.k;
+    this.clouds.tilePositionX = (screenLeft - tileLeft) / perTexturePixel;
+  }
+
+  update(_time: number, delta: number) {
+    this.driftClouds(delta);
   }
 
   // ---------- hints ----------
@@ -515,8 +577,7 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.scale;
     const zoom = Math.min(width / this.layout.width, height / this.layout.height);
     this.cameras.main.setZoom(zoom).centerOn(this.layout.width / 2, this.layout.height / 2);
-    this.fitBackground(this.background);
-    this.fitBackground(this.backgroundNext);
+    this.fitBackground();
     const view = this.visibleRect();
     this.dim.setPosition(view.x + view.width / 2, this.layout.height / 2).setSize(view.width * 2, this.layout.height * 4);
     const screenTop = this.layout.height / 2 - height / 2 / zoom;

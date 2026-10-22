@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync } from "fs";
 import { describe, expect, it } from "vitest";
 import { RUNTIME_IMAGES } from "./game/art";
+import { STAGING, stageFrame } from "./game/stage";
 import {
   audioFor,
   castFor,
@@ -138,17 +139,30 @@ describe("The Puzzle Phantom of Willowbrook", () => {
     expect(puzzleTotal(puzzle)).toBe(8);
   });
 
-  it("puts everyone who talks in a scene on screen: the detective, Sam, then whoever they meet", () => {
-    const beats: StoryBeat[] = [
-      { background: "bakery", style: "place", text: "Bakery" },
-      { background: "bakery-room", speaker: "baker", text: "Hello" },
-      { background: "bakery-room", speaker: "detective", text: "Hi" },
-      { background: "bakery-room", speaker: "kid", text: "Hey" },
-      { background: "bakery-room", text: "Narration" },
-    ];
-    expect(castFor(beats, 1)).toEqual(["detective", "kid", "baker"]);
-    expect(castFor(beats, 0)).toEqual([]);
-    expect(castFor(beats, 4)).toEqual([]);
+  it("stands the original's cast in each room for its dialogue, with everyone who talks there", () => {
+    const beat = (speaker?: StoryBeat["speaker"], style?: StoryBeat["style"]): StoryBeat => ({ background: "bakery-room", speaker, style, text: "" });
+    expect(castFor(beat("detective")).map((m) => m.speaker)).toEqual(["baker", "detective", "kid"]);
+    expect(castFor(beat())).toEqual([]);
+    expect(castFor(beat(undefined, "note"))).toEqual([]);
+    for (const l of levels) {
+      for (const b of [...l.intro, ...l.outro].filter((b) => b.speaker && !b.style)) {
+        expect(STAGING[b.background]?.cast?.map((m) => m.speaker), b.text.slice(0, 30)).toContain(b.speaker);
+      }
+    }
+  });
+
+  it("frames the original's view as it did, so characters stand on the room's floor", () => {
+    // A 1280x720 screen shows the 640x360 view at twice the size, as Godot stretched it
+    const frame = stageFrame({ x: 640, y: 360 }, 2);
+    expect([frame.x(0), frame.y(0), frame.x(640), frame.y(360)]).toEqual([0, 0, 1280, 720]);
+    // The living room: room.png (1024 high) at (322, 208), scale 0.42. The detective's frame
+    // (1536 high, scale 0.2) ends near the bottom of the screen and inside the room
+    const room = STAGING["living-room"];
+    const detective = room.cast!.find((m) => m.speaker === "detective")!;
+    const roomBottom = frame.y(room.picture.y + (1024 * room.picture.scale) / 2);
+    const feet = frame.y(detective.y + (1536 * detective.scale) / 2);
+    expect(feet).toBeGreaterThan(680);
+    expect(feet).toBeLessThan(roomBottom);
   });
 
   it("ends the story with the Phantom unmasked", () => {

@@ -1,3 +1,4 @@
+import { STAGING, type CastMember } from "./stage";
 import type { Direction, MapPlace, PhantomConfig, PhantomLevel, Puzzle, Speaker, StoryBeat } from "./types";
 
 export function getLevelIndex(level?: number) {
@@ -31,26 +32,12 @@ export const SPEAKER_NAMES: Record<Speaker, string> = {
 };
 
 /**
- * Who stands on screen for a line: everyone who speaks in the run of dialogue around it on the
- * same background, left to right.
+ * Who stands on screen for a line of dialogue: everyone the original put in that room, where it
+ * put them, for the whole of the conversation.
  */
-export function castFor(beats: StoryBeat[], index: number): Speaker[] {
-  const beat = beats[index];
-  if (!beat?.speaker) return [];
-  const inRun = (other: StoryBeat | undefined) =>
-    !!other?.speaker && !other.style && other.background === beat.background;
-  let first = index;
-  while (inRun(beats[first - 1])) first -= 1;
-  let last = index;
-  while (inRun(beats[last + 1])) last += 1;
-  const cast: Speaker[] = [];
-  for (let i = first; i <= last; i += 1) {
-    const speaker = beats[i].speaker as Speaker;
-    if (!cast.includes(speaker)) cast.push(speaker);
-  }
-  // The detective on the left, Sam next to him, and whoever they're talking to on the right
-  const order = (speaker: Speaker) => (speaker === "detective" ? 0 : speaker === "kid" ? 1 : 2);
-  return cast.sort((a, b) => order(a) - order(b));
+export function castFor(beat: StoryBeat | undefined): CastMember[] {
+  if (!beat?.speaker || beat.style) return [];
+  return STAGING[beat.background]?.cast ?? [];
 }
 
 /** Every image a level's story and puzzle show, so tests can check they all ship. */

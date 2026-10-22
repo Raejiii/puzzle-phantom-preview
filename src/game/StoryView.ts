@@ -1,15 +1,16 @@
 import Phaser from "phaser";
-import { BLINK_FRAMES, CHARACTERS, GOLD, GOLD_TEXT, INK, NAVY_DARK, PAPER, SOURCE_WIDTH, type Layout, type Rect } from "./art";
+import { CHARACTERS, GOLD, GOLD_TEXT, INK, NAVY_DARK, PAPER, SOURCE_WIDTH, type Layout, type Rect } from "./art";
 import type { LevelAudio } from "./audio";
 import { SPEAKER_NAMES, castFor } from "./logic";
+import { FRAME_WIDTH, IDLE_FPS, IDLE_FRAMES, type CastMember, type StageFrame } from "./stage";
 import type { Speaker, StoryBeat } from "./types";
 import { STORY_FONT, UI_FONT, drawPanel, fitText, makeButton, type Button } from "./ui";
 
 // Typing speeds from the original: place titles type slower, to the typewriter sound
 const TYPE_MS = 50;
 const PLACE_TYPE_MS = 80;
-const DIM_TINT = 0x8a8a9a;
-const BLINK_FRAME_MS = 90;
+/** Characters stand just in front of the background, so the bakery counter can go in front of the baker. */
+export const CAST_DEPTH = -9;
 // Pause after a line before auto-advance moves on
 const AUTO_PAUSE_MS = 700;
 
@@ -17,6 +18,7 @@ const AUTO_PAUSE_MS = 700;
  * Plays story beats one tap at a time, as the original does: each line types out while its
  * voice-over plays. A tap while it types shows the whole line and stops the voice; the next tap
  * moves on. With auto-advance on, the next line follows once the voice has finished.
+ * The room's characters stand where the original put them, looping their frames nonstop as it does.
  * Narration and dialogue sit in the caption panel, the Phantom's notes on the original's pictures
  * of them, and new places get a title card.
  */
@@ -36,11 +38,8 @@ export class StoryView {
   private active = false;
   private autoAdvance = false;
 
-  private characters = new Map<Speaker, Phaser.GameObjects.Image>();
-  private blinks: Phaser.Time.TimerEvent[] = [];
-  /** The speaker's bob while their voice plays, and who is bobbing. */
-  private talk: { tween: Phaser.Tweens.Tween; image: Phaser.GameObjects.Image } | null = null;
-  private cast: Speaker[] = [];
+  private characters = new Map<Speaker, Phaser.GameObjects.Sprite>();
+  private cast: CastMember[] = [];
   private captionPanel: Phaser.GameObjects.Graphics;
   private nameTag: Phaser.GameObjects.Container;
   private nameShape: Phaser.GameObjects.Graphics;
@@ -59,11 +58,20 @@ export class StoryView {
     private scene: Phaser.Scene,
     private audio: LevelAudio,
     private setBackground: (key: string) => void,
+    /** Where the original's view lies on the current background. */
+    private stage: () => StageFrame | null,
   ) {
-    for (const key of CHARACTERS) {
-      const image = scene.add.image(0, 0, key).setOrigin(0.5, 1).setDepth(5).setVisible(false);
-      this.characters.set(key as Speaker, image);
-      this.blinks.push(this.startBlinking(image, key));
+    for (const key of CHARACTERS as Speaker[]) {
+      const idle = `${key}-idle`;
+      if (!scene.anims.exists(idle)) {
+        scene.anims.create({
+          key: idle,
+          frames: IDLE_FRAMES(key).map((frame) => ({ key: frame })),
+          frameRate: IDLE_FPS[key],
+          repeat: -1,
+        });
+      }
+      this.characters.set(key, scene.add.sprite(0, 0, key).setVisible(false).play(idle));
     }
     this.shade = scene.add.rectangle(0, 0, 10, 10, NAVY_DARK, 0.55).setDepth(6).setVisible(false);
     this.captionPanel = scene.add.graphics().setDepth(7);
@@ -80,7 +88,6 @@ export class StoryView {
       .text(0, 0, "Tap to continue", { fontFamily: UI_FONT, fontSize: "24px", fontStyle: "500", color: GOLD_TEXT, resolution: 2 })
       .setOrigin(1, 1)
       .setDepth(8);
-    scene.tweens.add({ targets: this.tapHint, alpha: 0.25, duration: 400, yoyo: true, repeat: -1 });
     this.noteImage = scene.add.image(0, 0, "note-1").setDepth(7);
     this.notePaper = scene.add.graphics().setDepth(7);
     // Notes and titles type into a box as wide as the finished text, so lines don't shift as they grow
@@ -138,15 +145,6 @@ export class StoryView {
     this.finish();
   }
 
-  /** The original's blink: a quick open, half shut, shut, half shut, open, every few seconds. */
-  private startBlinking(image: Phaser.GameObjects.Image, key: string) {
-    const frames = BLINK_FRAMES(key).filter((frame) => this.scene.textures.exists(frame));
-    const blink = () => {
-      frames.forEach((frame, i) => this.scene.time.delayedCall(i * BLINK_FRAME_MS, () => image.setTexture(frame)));
-    };
-    return this.scene.time.addEvent({ delay: Phaser.Math.Between(2600, 4200), loop: true, startAt: Phaser.Math.Between(0, 2000), callback: blink });
-  }
-
   private tap() {
     if (!this.active) return;
     if (this.shown < this.fullText.length) {
@@ -169,7 +167,6 @@ export class StoryView {
     this.stopTyping();
     this.cancelAuto();
     this.audio.stopVoice();
-    this.stopTalking();
     this.tapZone.disableInteractive();
     this.hideAll();
     const done = this.onDone;
@@ -179,6 +176,7 @@ export class StoryView {
 
   private hideAll() {
     this.characters.forEach((image) => image.setVisible(false));
+    this.scene.tweens.killTweensOf(this.tapHint);
     [this.shade, this.captionPanel, this.nameTag, this.body, this.tapHint, this.noteImage, this.notePaper, this.noteText, this.placeText].forEach(
       (item) => item.setVisible(false),
     );
@@ -204,39 +202,12 @@ export class StoryView {
 
   private voiceEnded() {
     this.voiceDone = true;
-    this.stopTalking();
     this.armAuto();
-  }
-
-  /** The speaker bobs gently while their line is read out. */
-  private startTalking() {
-    const speaker = this.beats[this.index]?.speaker;
-    const image = speaker && this.characters.get(speaker);
-    if (!image || !this.layout) return;
-    this.stopTalking();
-    image.y = this.layout.cast.bottom;
-    const tween = this.scene.tweens.add({
-      targets: image,
-      y: this.layout.cast.bottom - 8,
-      duration: 220,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut",
-    });
-    this.talk = { tween, image };
-  }
-
-  private stopTalking() {
-    if (!this.talk) return;
-    this.talk.tween.remove();
-    if (this.layout) this.talk.image.y = this.layout.cast.bottom;
-    this.talk = null;
   }
 
   private playLine(beat: StoryBeat) {
     this.voiceDone = !beat.audio;
     this.audio.playVoice(beat.audio, () => this.voiceEnded());
-    if (beat.audio && beat.speaker) this.startTalking();
     if (!beat.audio) this.armAuto();
   }
 
@@ -251,14 +222,13 @@ export class StoryView {
   private show(index: number) {
     this.index = index;
     const beat = this.beats[index];
+    // Scenes cut from one to the next, as in the original
     this.setBackground(beat.background);
-    const previousCast = this.cast;
-    this.cast = castFor(this.beats, index);
+    this.cast = castFor(beat);
     this.hideAll();
     this.stopTyping();
     this.cancelAuto();
     this.audio.stopVoice();
-    this.stopTalking();
     this.fullText = beat.text;
     this.shown = 0;
     this.voiceDone = false;
@@ -270,8 +240,7 @@ export class StoryView {
       this.shade.setVisible(true);
       const picture = beat.noteImage && this.scene.textures.exists(beat.noteImage) ? beat.noteImage : null;
       if (picture) {
-        this.noteImage.setTexture(picture).setVisible(true).setAlpha(0);
-        this.scene.tweens.add({ targets: this.noteImage, alpha: 1, duration: 300 });
+        this.noteImage.setTexture(picture).setVisible(true);
       } else {
         this.notePaper.setVisible(true);
       }
@@ -282,16 +251,7 @@ export class StoryView {
       if (beat.speaker) {
         this.nameTag.setVisible(true);
         this.nameText.setText(SPEAKER_NAMES[beat.speaker]);
-        this.cast.forEach((speaker) => {
-          const image = this.characters.get(speaker)!;
-          image.setVisible(true);
-          if (!previousCast.includes(speaker)) {
-            image.setAlpha(0);
-            this.scene.tweens.add({ targets: image, alpha: 1, duration: 300 });
-          }
-          if (speaker === beat.speaker) image.clearTint();
-          else image.setTint(DIM_TINT);
-        });
+        this.cast.forEach((member, i) => this.characters.get(member.speaker)!.setVisible(true).setDepth(CAST_DEPTH + i * 0.1));
       }
     }
     this.target.setVisible(true).setText("");
@@ -322,8 +282,16 @@ export class StoryView {
     this.stopTyping();
     this.shown = this.fullText.length;
     this.target?.setText(this.fullText);
-    this.tapHint.setVisible(true);
+    this.showTapHint();
     this.armAuto();
+  }
+
+  /** "Tap to continue" blinks as the original's does: fading out and back in, 0.4 s each way. */
+  private showTapHint() {
+    if (this.tapHint.visible) return;
+    this.scene.tweens.killTweensOf(this.tapHint);
+    this.tapHint.setVisible(true).setAlpha(1);
+    this.scene.tweens.add({ targets: this.tapHint, alpha: 0, duration: 400, yoyo: true, repeat: -1 });
   }
 
   /** Sizes a text for its whole line, then puts back what has typed so far. */
@@ -350,25 +318,27 @@ export class StoryView {
     const bottom = view.y + view.height;
     this.replay.setSize(64, 64, 30);
 
-    // Characters
-    const slots = layout.cast.slots[Math.min(this.cast.length, 3) - 1] ?? [];
-    this.cast.forEach((speaker, i) => {
-      const image = this.characters.get(speaker)!;
-      const speaking = speaker === beat.speaker;
-      const scale = (layout.cast.height / image.height) * (speaking ? 1 : 0.94);
-      image.setX(slots[i] ?? layout.width / 2).setScale(scale);
-      if (this.talk?.image !== image) image.setY(layout.cast.bottom);
-    });
+    // Characters, where the original stood them in this room
+    const frame = this.stage();
+    let speakerX = caption.x + 160;
+    if (frame) {
+      this.cast.forEach((member) => {
+        const image = this.characters.get(member.speaker)!;
+        image
+          .setPosition(frame.x(member.x), frame.y(member.y))
+          .setScale((member.scale * FRAME_WIDTH * frame.k) / image.width)
+          .setFlipX(!!member.flip);
+        if (member.speaker === beat.speaker) speakerX = image.x;
+      });
+    }
 
     // Caption panel, with the speaker's name on a gold tag
     drawPanel(this.captionPanel, caption.width, caption.height).setPosition(caption.x + caption.width / 2, caption.y + caption.height / 2);
     const padding = 36;
     const nameWidth = Math.max(220, this.nameText.width + 60);
     this.nameShape.clear().fillStyle(GOLD, 1).fillRoundedRect(-nameWidth / 2, -28, nameWidth, 56, 28);
-    const speakerIndex = beat.speaker ? this.cast.indexOf(beat.speaker) : 0;
-    const tagX = (slots[speakerIndex] ?? caption.x + 160) as number;
     this.nameTag.setPosition(
-      Phaser.Math.Clamp(tagX, caption.x + nameWidth / 2 + 20, caption.x + caption.width - nameWidth / 2 - 110),
+      Phaser.Math.Clamp(speakerX, caption.x + nameWidth / 2 + 20, caption.x + caption.width - nameWidth / 2 - 110),
       caption.y,
     );
     const top = caption.y + (beat.speaker ? 42 : 30);
@@ -436,7 +406,6 @@ export class StoryView {
   destroy() {
     this.stopTyping();
     this.cancelAuto();
-    this.blinks.forEach((event) => event.remove());
     this.characters.forEach((image) => image.destroy());
     [
       this.shade,

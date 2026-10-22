@@ -47,8 +47,14 @@ original:
   HINTS"; each quiz question has its own. **How to** plays the original's
   how-to clip for that puzzle (the shell's "How to play" plays all five
   joined together), and the timer waits while it's open.
-- Characters blink with the original's three frames, and the speaker bobs
-  gently while their line is read. The 🔊 button replays the line.
+- Scenes are laid out as in the original (`src/game/stage.ts` holds its
+  Godot positions): the same framing of each room, everyone in the room
+  standing where the original put them for the whole conversation, the
+  bakery counter in front of the baker, and the sky and clouds drifting
+  behind the outdoor scenes. Characters loop their three frames nonstop as
+  the original does, and scenes cut from one to the next. On a phone held
+  upright a room with people in it shows whole across the screen, on black.
+  The 🔊 button replays the line.
 - **Auto** (next to Skip story) turns on auto-advance: each line moves on by
   itself once its voice has finished. It's off by default and remembered on
   the device.
@@ -88,10 +94,10 @@ its own music loop for the whole level, over the voice-over.
   mute, so the original's main menu (and its menu music), pause menu, save
   system and "Thanks for playing!" popup are not ported.
 - Added for the web version: the **Skip story**, **Auto** and 🔊 buttons,
-  the gold name tag on each line, the speaker's bob, confetti, the clock,
+  the gold name tag on each line, confetti, the clock,
   case board and badges above, and tap controls alongside drag.
-- The original loops each character's blink constantly; here they blink
-  every few seconds.
+- Lines show in the caption panel along the bottom rather than the
+  original's speech bubbles, so it covers the characters' legs.
 - The word, quiz and map boards are drawn in code rather than placed over
   the original's boards, so their layout differs from the original's (see
   its how-to clips) while the text and sounds are the same. The planet door
