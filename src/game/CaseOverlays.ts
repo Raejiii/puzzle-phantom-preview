@@ -35,10 +35,14 @@ abstract class Overlay {
 
   protected abstract layout(view: Rect): void;
 
+  /** Stops anything the overlay still has running, before it fades and is destroyed. */
+  protected stop() {}
+
   finish() {
     if (this.finished) return;
     this.finished = true;
     this.timer.remove();
+    this.stop();
     this.scene.tweens.add({
       targets: [this.container, this.shade],
       alpha: 0,
@@ -63,6 +67,7 @@ export class MidnightClock extends Overlay {
   private left: Phaser.GameObjects.Text;
   private minutes: number;
   private radius = 150;
+  private sweep: Phaser.Tweens.Tween;
 
   constructor(scene: Phaser.Scene, from: string | undefined, to: string, onDone: () => void) {
     super(scene, 3400, onDone);
@@ -80,7 +85,7 @@ export class MidnightClock extends Overlay {
     this.container.add([this.face, this.hands, this.time, this.left]);
     this.update(start);
     // The hands sweep forward to the new time
-    scene.tweens.addCounter({
+    this.sweep = scene.tweens.addCounter({
       from: start,
       to: end,
       delay: 350,
@@ -90,7 +95,13 @@ export class MidnightClock extends Overlay {
     });
   }
 
+  // Tapped past before the hands finished: stop the sweep so it doesn't draw on a removed clock
+  protected stop() {
+    this.sweep.remove();
+  }
+
   private update(minutes: number) {
+    if (!this.time.active) return;
     this.minutes = minutes;
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
